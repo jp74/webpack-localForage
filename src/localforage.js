@@ -91,24 +91,22 @@
                 var loadDriver;
                 switch (driverName) {
                     case self.INDEXEDDB:
-                        loadDriver = require('bundle?lazy!./drivers/indexeddb');
+                        loadDriver = require('./drivers/indexeddb');
                         break;
                     case self.LOCALSTORAGE:
-                        loadDriver = require('bundle?lazy!./drivers/localstorage');
+                        loadDriver = require('./drivers/localstorage');
                         break;
                     case self.WEBSQL:
-                        loadDriver = require('bundle?lazy!./drivers/websql');
+                        loadDriver = require('./drivers/websql');
                 }
 
-                loadDriver(function(driver) {
-                    self._extend(driver);
+                self._extend(loadDriver);
 
-                    if (callback) {
-                        callback();
-                    }
+                if (callback) {
+                    callback();
+                }
 
-                    resolve();
-                });
+                resolve();
             });
 
             return this._driverSet;
